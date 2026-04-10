@@ -17,18 +17,15 @@ const client = new MongoClient(process.env.MONGODB_URI, {
     }
 });
 
-const skills = {
-    STRENGTH: "Strength",
-    DEXTERITY: "Dexterity",
-    INTELLIGENCE: "Intelligence",
-    WILL: "Will",
-}
-
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);
 })
 
-// Species
+
+
+// ------------------------------------------------------------ SPECIES ------------------------------------------------------------
+
+
 
 app.get('/species', (req, res) => {
     client.connect()
@@ -150,7 +147,11 @@ app.delete('/species/:species/race/:race', (req, res) => {
         })
 })
 
-// Classes
+
+
+// ------------------------------------------------------------ CLASSES ------------------------------------------------------------
+
+
 
 app.get('/classes', (req, res) => {
     client.connect()
@@ -200,25 +201,6 @@ app.get('/classes/:name/subclasses', (req, res) => {
                 })
                 .catch(error => {
                     res.send(`Error fetching class:' ${error}`);
-                    client.close();
-                });
-        })
-        .catch(error => {
-            res.send(`Error connecting to MongoDB:' ${error}`);
-            client.close();
-        })
-})
-
-app.get('/classes/spellcaster/:isSpellcaster', (req, res) => {
-    client.connect()
-        .then(connection => {
-            connection.db("mechanics").collection("classes").find({ "spellcasting.spellcaster": (req.params.isSpellcaster === "true") }).toArray()
-                .then(classes => {
-                    res.json(classes);
-                    client.close();
-                })
-                .catch(error => {
-                    res.send(`Error fetching classes:' ${error}`);
                     client.close();
                 });
         })
@@ -291,7 +273,11 @@ app.delete('/classes/:class/subclass/:subclass', (req, res) => {
         })
 })
 
-// Backgrounds
+
+
+// ------------------------------------------------------------ BACKGROUNDS ------------------------------------------------------------
+
+
 
 app.get('/backgrounds', (req, res) => {
     client.connect()
@@ -362,7 +348,10 @@ app.delete('/background/:background', (req, res) => {
 })
 
 
-// Spells
+
+// ------------------------------------------------------------ SPELLS ------------------------------------------------------------
+
+
 
 app.get('/spells', (req, res) => {
     client.connect()
@@ -451,7 +440,11 @@ app.delete('/spells/:spell', (req, res) => {
         })
 })
 
-// Feats
+
+
+// ------------------------------------------------------------ FEATS ------------------------------------------------------------
+
+
 
 app.get('/feats', (req, res) => {
     client.connect()
